@@ -26,9 +26,14 @@ app.get("/", async (req, res) => {
 
 // ユーザー追加：フォームから送られてきた名前を保存する
 app.post("/users", async (req, res) => {
-  const name = req.body.name;
+  const { name, age } = req.body;
   if (name) {
-    await prisma.user.create({ data: { name } });
+    await prisma.user.create({ 
+      data: { 
+        name, 
+        age: age ? parseInt(age) : null 
+      } 
+    });
   }
   res.redirect("/");
 });
